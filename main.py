@@ -1,3 +1,6 @@
+def total(x, y, z):
+    return x + y + z;
+
 def printBoard(xState, zState):
     zero = 'X' if xState[0] else ('O' if zState[0] else 0);
     one = 'X' if xState[1] else ('O' if zState[1] else 1);
@@ -15,6 +18,21 @@ def printBoard(xState, zState):
     print(f'--|---|--');
     print(f'{six} | {seven} | {eight}');
 
+
+def checkWin(xState, zState):
+    victories = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+
+    for victory in victories:
+        if(total(xState[victory[0]], xState[victory[1]], xState[victory[2]]) == 3):
+            print('X wins');
+            return 1;
+        if(total(zState[victory[0]], zState[victory[1]], zState[victory[2]]) == 3):
+            print('O wins');
+            return 0;
+        
+    return -1;
+
+
 if __name__ == "__main__":
     xState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     zState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -30,5 +48,11 @@ if __name__ == "__main__":
             print("O's chance");
             value = int(input("Enter a value: "));
             zState[value] = 1;
+
+        cWin = checkWin(xState, zState);
+        if(cWin != -1):
+            print("Game Over!");
+            break;
+
         turn = 1 - turn;
         
